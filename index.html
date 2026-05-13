@@ -1,521 +1,782 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0VLTZMV0E4"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B4SNPZ5JGH"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-0VLTZMV0E4');
+  gtag('config', 'G-B4SNPZ5JGH');
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Center Games</title>
+    <title>GamiVoxe - Free Mobile Games</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --dark-bg: #1A1A2E;
-            --main-bg: #0F0F23;
-            --card-bg: #1E1E3A;
-            --purple-cta: #8B43B8;
-            --purple-light: #A450D2;
-            --text-color: #E0E0E0;
-            --heading-color: #FFFFFF;
+            --neon: #00FFCC;
+            --neon-glow: rgba(0, 255, 204, 0.3);
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(20, 20, 30, 0.8);
+            --card-border: rgba(255, 255, 255, 0.06);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --text-muted: rgba(255, 255, 255, 0.4);
+            --accent-blue: #4f8cff;
+            --accent-blue-glow: rgba(79, 140, 255, 0.3);
+            --success: #00ff88;
+            --warning: #ffaa00;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--main-bg);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            direction: ltr;
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 20px;
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
         }
+        .bg-orb-1 { width: 600px; height: 600px; background: var(--neon); top: -200px; left: -200px; animation: float 20s ease-in-out infinite; }
+        .bg-orb-2 { width: 500px; height: 500px; background: var(--accent-blue); bottom: -100px; right: -100px; animation: float 25s ease-in-out infinite reverse; }
+        @keyframes float { 0%,100% { transform: translate(0,0); } 50% { transform: translate(50px,-50px); } }
 
         /* Header */
-        header {
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 12px 16px;
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            justify-content: space-between;
+            gap: 16px;
         }
-
         .logo {
-            font-size: 26px;
-            font-weight: bold;
-            color: var(--heading-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            flex-shrink: 0;
         }
-
-        .search-box {
+        .logo-icon {
+            width: 36px; height: 36px;
+            background: linear-gradient(135deg, var(--neon), var(--accent-blue));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--dark-bg);
+        }
+        .search-bar {
+            flex: 1;
+            max-width: 400px;
             position: relative;
         }
-
-        .search-box input {
-            padding: 12px 20px;
-            border-radius: 25px;
-            border: none;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            width: 250px;
-            text-align: left;
-            padding-right: 50px;
+        .search-bar input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: all 0.3s ease;
         }
-
-        .search-box::after {
-            content: '🔎';
+        .search-bar input::placeholder { color: var(--text-muted); }
+        .search-bar input:focus {
+            border-color: var(--neon);
+            box-shadow: 0 0 0 3px var(--neon-glow);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .search-bar i {
             position: absolute;
-            right: 20px;
+            left: 14px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
-
-        /* Hero Banner with Background Image */
-        .hero-banner {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://i.postimg.cc/C1KqDrFn/LXlAPV.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border-radius: 15px;
-            padding: 50px;
-            position: relative;
-            overflow: hidden;
+        .status-indicator {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 40px;
-            min-height: 250px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--success);
+            background: rgba(0, 255, 136, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            flex-shrink: 0;
         }
+        .status-dot {
+            width: 8px; height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
 
+        /* Main */
+        .main-content { position: relative; z-index: 1; padding-top: 80px; }
+
+        /* Hero */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+        }
+        .hero-card {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&q=80') center/cover;
+            opacity: 0.3;
+        }
+        .hero-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.6) 50%, rgba(10,10,15,0.3) 100%);
+            z-index: 1;
+        }
         .hero-content {
-            z-index: 2;
-            text-align: center;
-            max-width: 800px;
-            color: var(--heading-color);
-        }
-
-        .hero-content h1 {
-            font-size: 48px;
-            margin: 0 0 15px;
-            color: var(--heading-color);
-        }
-
-        .hero-content p {
-            font-size: 22px;
-            color: var(--text-color);
-        }
-
-        /* Game Cards Section */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 40px 0 20px;
-        }
-
-        .section-header h2 {
-            font-size: 28px;
-            color: var(--heading-color);
-        }
-
-        .view-all {
-            color: var(--purple-light);
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* Game Cards */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .game-card {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            text-align: center;
-            padding: 0 0 20px 0;
-            transition: transform 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             position: relative;
-        }
-
-        .game-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .game-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-bottom: 2px solid var(--purple-cta);
-        }
-
-        .game-info {
-            padding: 15px;
-        }
-
-        .game-info h3 {
-            margin: 0 0 10px;
-            color: var(--heading-color);
-            font-size: 20px;
-        }
-
-        .game-details {
+            z-index: 2;
+            padding: 40px 24px 32px;
             display: flex;
             flex-direction: column;
+            gap: 16px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 255, 204, 0.15);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            color: var(--neon);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: fit-content;
+        }
+        .hero-title { font-size: 2rem; font-weight: 800; line-height: 1.2; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+        .hero-rating { display: flex; align-items: center; gap: 8px; }
+        .stars { display: flex; gap: 2px; }
+        .stars i { color: #ffc107; font-size: 0.9rem; }
+        .rating-text { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; }
+        .hero-meta { display: flex; gap: 16px; flex-wrap: wrap; }
+        .meta-item { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary); }
+        .meta-item i { color: var(--neon); font-size: 0.85rem; }
+        .hero-btn {
+            margin-top: 8px;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--neon), #00d4aa);
+            border: none;
+            border-radius: 14px;
+            color: var(--dark-bg);
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
             gap: 10px;
-            font-size: 14px;
-            color: var(--text-color);
-            margin-bottom: 15px;
+            width: 100%;
+            max-width: 320px;
+            box-shadow: 0 4px 30px var(--neon-glow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        .hero-btn:hover::before { left: 100%; }
+        .hero-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 40px var(--neon-glow); }
+        .hero-btn:active { transform: translateY(0); }
 
-        .game-details .platforms,
-        .game-details .stats {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
+        /* Games Grid */
+        .games-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px 40px;
         }
-       
-        .game-details span {
+        .section-header {
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: space-between;
+            margin-bottom: 20px;
         }
-
-        /* Font Awesome Icons */
-        .game-details .icon {
-            font-size: 18px;
-        }
-
-        /* Colors for each icon */
-        .fa-android {
-            color: #3DDC84; /* Android green */
-        }
-       
-        .fa-apple {
-            color: #BDBDBD; /* A light gray for iOS */
-        }
-
-        .fa-star {
-            color: #FFD700; /* Gold color for rating star */
-        }
-       
-        .fa-database {
-            color: #5DADE2; /* Blue color for size icon */
-        }
-
-        .cta-button {
-            display: inline-block;
-            background-image: linear-gradient(to right, #9C27B0, #6A059B);
-            color: var(--heading-color);
-            padding: 12px 40px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.3s ease;
-        }
-
-        .cta-button:hover {
-            transform: scale(1.05);
-        }
-
-        /* Features Section */
-        .features-section {
-            margin-top: 60px;
-        }
-
-        .features-grid {
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
             display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title i { color: var(--neon); font-size: 1.1rem; }
+        .view-all {
+            font-size: 0.85rem;
+            color: var(--neon);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+        .game-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .game-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 255, 204, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+        .game-thumb {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+        }
+        .game-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .game-card:hover .game-thumb img { transform: scale(1.08); }
+        .free-badge {
+            position: absolute;
+            top: 10px; right: 10px;
+            background: linear-gradient(135deg, var(--neon), #00d4aa);
+            color: var(--dark-bg);
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .game-info { padding: 12px 14px 14px; }
+        .game-title { white-space: normal;           /* allow wrapping */
+    overflow-wrap: break-word;     /* break long words */
+    word-wrap: break-word;         /* legacy support */
+    word-break: break-word;        /* force break if needed */
+    line-height: 1.3;   }
+        .game-sub { font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+        .game-sub i { color: var(--neon); font-size: 0.7rem; }
+
+        /* Ticker */
+        .ticker-section {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 90;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--card-border);
+            padding: 10px 16px;
+        }
+        .ticker-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            overflow: hidden;
+        }
+        .ticker-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--neon);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+        .ticker-label i { animation: pulse 2s ease-in-out infinite; }
+        .ticker-scroll {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        .ticker-scroll::before, .ticker-scroll::after {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 40px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .ticker-scroll::before { left: 0; background: linear-gradient(to right, rgba(10,10,15,0.95), transparent); }
+        .ticker-scroll::after { right: 0; background: linear-gradient(to left, rgba(10,10,15,0.95), transparent); }
+        .ticker-track {
+            display: flex;
+            gap: 32px;
+            animation: ticker 30s linear infinite;
+            white-space: nowrap;
+        }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .ticker-item {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .ticker-item .user { color: var(--text-primary); font-weight: 600; }
+        .ticker-item .game { color: var(--neon); font-weight: 600; }
+        .ticker-item .time { color: var(--text-muted); font-size: 0.7rem; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 50px;
-            flex-wrap: wrap;
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal {
+            background: linear-gradient(145deg, #141420, #0f0f1a);
+            border: 1px solid rgba(0, 255, 204, 0.15);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 420px;
+            padding: 32px 28px;
+            position: relative;
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(0, 255, 204, 0.05);
+        }
+        .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+        .modal-close {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 36px; height: 36px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+        .modal-close:hover { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); }
+        .modal-icon {
+            width: 72px; height: 72px;
+            background: linear-gradient(135deg, rgba(0, 255, 204, 0.15), rgba(79, 140, 255, 0.15));
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+            color: var(--neon);
+        }
+        .modal-icon i { animation: shield-pulse 2s ease-in-out infinite; }
+        @keyframes shield-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .modal-title { font-size: 1.3rem; font-weight: 700; text-align: center; margin-bottom: 10px; }
+        .modal-desc { font-size: 0.9rem; color: var(--text-secondary); text-align: center; line-height: 1.6; margin-bottom: 24px; }
+        .modal-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .step { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--card-border); border-radius: 12px; }
+        .step-num { width: 28px; height: 28px; background: linear-gradient(135deg, var(--neon), var(--accent-blue)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: var(--dark-bg); flex-shrink: 0; }
+        .step-text { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; }
+        .modal-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--neon), #00d4aa);
+            border: none;
+            border-radius: 14px;
+            color: var(--dark-bg);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 30px var(--neon-glow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .modal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        .modal-btn:hover::before { left: 100%; }
+        .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 40px var(--neon-glow); }
+        .modal-trust { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 16px; font-size: 0.75rem; color: var(--text-muted); }
+        .modal-trust i { color: var(--success); }
+
+        /* Responsive */
+        @media (min-width: 640px) {
+            .games-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+            .hero-title { font-size: 2.5rem; }
+            .hero-content { padding: 48px 32px 36px; }
+            .hero-btn { width: auto; }
+        }
+        @media (min-width: 768px) {
+            .games-grid { grid-template-columns: repeat(4, 1fr); }
+            .header { padding: 14px 24px; }
+            .hero, .games-section { padding-left: 24px; padding-right: 24px; }
+        }
+        @media (min-width: 1024px) {
+            .games-grid { grid-template-columns: repeat(6, 1fr); }
+            .hero-title { font-size: 3rem; }
         }
 
-        .feature-item {
-            text-align: center;
-            max-width: 250px;
-        }
-
-        .feature-icon {
-            font-size: 50px;
-            color: var(--purple-cta);
-            margin-bottom: 15px;
-        }
-
-        /* --- Media Queries for Mobile Responsiveness --- */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            header {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .logo {
-                font-size: 22px;
-            }
-
-            .search-box input {
-                width: 100%;
-                text-align: center;
-                padding-right: 20px;
-            }
-
-            .search-box::after {
-                right: 20px;
-            }
-
-            .hero-banner {
-                padding: 30px;
-                min-height: 200px;
-            }
-
-            .hero-content h1 {
-                font-size: 30px;
-            }
-
-            .hero-content p {
-                font-size: 16px;
-            }
-
-            .section-header {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-            }
-
-            .section-header h2 {
-                font-size: 24px;
-            }
-
-            .games-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .game-card img {
-                height: 150px;
-            }
-           
-            .features-grid {
-                flex-direction: column;
-                gap: 30px;
-                align-items: center;
-            }
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
     </style>
+<base target="_blank">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">Games4You</div>
-            <div class="search-box">
-                <input type="text" placeholder="Search for games...">
-            </div>
-        </header>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
 
-        <section class="hero-banner">
-            <div class="hero-content">
-                <h1>Discover Endless Fun!</h1>
-                <p>The best exclusive offers for mobile games in one place.</p>
+    <header class="header">
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon"><i class="fas fa-gamepad"></i></div>
+                GamiVoxe MODS
+            </a>
+           
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                Online
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="hero-card">
+                <div class="hero-bg"></div>
+                <div class="hero-gradient"></div>
+                <div class="hero-content">
+                    <div class="hero-badge"><i class="fas fa-fire"></i> Trending Now</div>
+                    <h1 class="hero-title">GTA V Mobile</h1>
+                    <div class="hero-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <span class="rating-text">4.9 (128,492 reviews)</span>
+                    </div>
+                    <div class="hero-meta">
+                        <div class="meta-item"><i class="fas fa-download"></i> 2.4M+ Downloads</div>
+                        <div class="meta-item"><i class="fas fa-mobile-alt"></i> iOS & Android</div>
+                        <div class="meta-item"><i class="fas fa-shield-alt"></i> 100% Safe</div>
+                    </div>
+                    <button class="hero-btn" data-game="gtav" onclick="openModal(this)">
+                        <i class="fas fa-download"></i>
+                        Download Now
+                    </button>
+                </div>
             </div>
         </section>
-       
-        <section class="games">
+
+        <section class="games-section">
             <div class="section-header">
-                <h2>Best Games</h2>
-                <a href="#" class="view-all">View All</a>
+                <h2 class="section-title"><i class="fas fa-bolt"></i> Popular Games</h2>
+                <a href="#" class="view-all">View All <i class="fas fa-chevron-right" style="font-size:0.7rem;"></i></a>
             </div>
             <div class="games-grid">
-                <div class="game-card">
-                    <img src="https://i.postimg.cc/8Pf4xy3M/the-spike-cross-logo.webp" alt="Viking Saga">
+                <div class="game-card" data-game="spike" onclick="openModal(this)">
+                    <div class="game-thumb">
+                        <img src="https://i.postimg.cc/8Pf4xy3M/the-spike-cross-logo.webp?w=400&q=80" alt="Spike">
+                        <span class="free-badge">Free</span>
+                    </div>
                     <div class="game-info">
-                        <h3>The Spike Cross-[MOD APK , Unlimited Money]</h3>
-                        <div class="game-details">
-                            <div class="platforms">
-                                <span>
-                                    <i class="fab fa-android icon"></i>
-                                    Android
-                                </span>
-                                <span>
-                                    <i class="fab fa-apple icon"></i>
-                                    iOS
-                                </span>
-                            </div>
-                            <div class="stats">
-                                <span>
-                                    <i class="fas fa-database icon"></i>
-                                    762MB
-                                </span>
-                                <span>
-                                    <i class="fas fa-star icon"></i>
-                                    8.5
-                                </span>
-                            </div>
-                        </div>
-                        <a href="https://gamivoxe.online/cl/i/grj1q2" class="cta-button">Install Now</a>
+                        <div class="game-title">The Spike Cross-[MOD APK , Unlimited Money]</div>
+                        <div class="game-sub"><i class="fas fa-star"></i> 4.8 &middot; Sports</div>
+                    </div>
+                </div>
+                <div class="game-card" data-game="boca" onclick="openModal(this)">
+                    <div class="game-thumb">
+                        <img src="https://i.postimg.cc/D09r2TDG/Toca-Boca-MOD-LOGO.webp?w=400&q=80" alt="boca">
+                        <span class="free-badge">Free</span>
+                    </div>
+                    <div class="game-info">
+                        <div class="game-title">Toca Boca World-MOD-APK[All Unlocked/Unlimited Money]</div>
+                        <div class="game-sub"><i class="fas fa-star"></i> 4.9 &middot; RPG</div>
+                    </div>
+                </div>
+                <div class="game-card" data-game="brawl" onclick="openModal(this)">
+                    <div class="game-thumb">
+                        <img src="https://i.postimg.cc/PqVwVsmf/brqzl-sqtrts-logo.webp?w=400&q=80" alt="brawl">
+                        <span class="free-badge">Free</span>
+                    </div>
+                    <div class="game-info">
+                        <div class="game-title">Brawl Stars MOD [Unlimited Money/Gems]</div>
+                        <div class="game-sub"><i class="fas fa-star"></i> 4.7 &middot; FPS</div>
+                    </div>
+                </div>
+                <div class="game-card" data-game="dragonball" onclick="openModal(this)">
+                    <div class="game-thumb">
+                        <img src="https://i.postimg.cc/QNQMHZHp/dragon-ball-legends-mod-apk-logo.webp?w=400&q=80" alt="dragonball">
+                        <span class="free-badge">Free</span>
+                    </div>
+                    <div class="game-info">
+                        <div class="game-title">Dragon Ball Legends MOD[MENU/One Hit/Crystals/God Mode]</div>
+                        <div class="game-sub"><i class="fas fa-star"></i> 4.9 &middot; Sandbox</div>
+                    </div>
+                </div>
+                <div class="game-card" data-game="baseball" onclick="openModal(this)">
+                    <div class="game-thumb">
+                        <img src="https://i.postimg.cc/pr2LyCYx/baseball9-mod.png?w=400&q=80" alt="baseball">
+                        <span class="free-badge">Free</span>
+                    </div>
+                    <div class="game-info">
+                        <div class="game-title">BASEBALL 9 (MOD, Unlimited Money)</div>
+                        <div class="game-sub"><i class="fas fa-star"></i> 4.6 &middot; Battle Royale</div>
                     </div>
                 </div>
 
-                <div class="game-card">
-                    <img src="https://i.postimg.cc/D09r2TDG/Toca-Boca-MOD-LOGO.webp" alt="Space Drifters">
+                   <div class="game-card" data-game="hollow" onclick="openModal(this)">
+                    <div class="game-thumb">
+                        <img src="https://i.postimg.cc/pdD2CM96/hllow-logo.webp?w=400&q=80" alt="hollow">
+                        <span class="free-badge">Free</span>
+                    </div>
                     <div class="game-info">
-                        <h3>Toca Boca World-MOD-APK[All Unlocked/Unlimited Money]</h3>
-                        <div class="game-details">
-                             <div class="platforms">
-                                <span>
-                                    <i class="fab fa-android icon"></i>
-                                    Android
-                                </span>
-                                <span>
-                                    <i class="fab fa-apple icon"></i>
-                                    iOS
-                                </span>
-                            </div>
-                            <div class="stats">
-                                <span>
-                                    <i class="fas fa-database icon"></i>
-                                    794MB
-                                </span>
-                                <span>
-                                    <i class="fas fa-star icon"></i>
-                                    9.0
-                                </span>
-                            </div>
-                        </div>
-                        <a href="https://gamivoxe.online/cl/i/w6jmr2" class="cta-button">Install Now</a>
+                        <div class="game-title">Hollow Knight: Silksong [MOD/Unlimited Money]</div>
+                        <div class="game-sub"><i class="fas fa-star"></i> 4.6 &middot; Battle Royale</div>
                     </div>
                 </div>
-
-                <div class="game-card">
-                    <img src="https://i.postimg.cc/PqVwVsmf/brqzl-sqtrts-logo.webp" alt="Mystic Manor">
-                    <div class="game-info">
-                        <h3>Brawl Stars MOD [Unlimited Money/Gems]</h3>
-                        <div class="game-details">
-                             <div class="platforms">
-                                <span>
-                                    <i class="fab fa-android icon"></i>
-                                    Android
-                                </span>
-                                <span>
-                                    <i class="fab fa-apple icon"></i>
-                                    iOS
-                                </span>
-                            </div>
-                            <div class="stats">
-                                <span>
-                                    <i class="fas fa-database icon"></i>
-                                    1.45GB
-                                </span>
-                                <span>
-                                    <i class="fas fa-star icon"></i>
-                                    9.1
-                                </span>
-                            </div>
-                        </div>
-                        <a href="https://gamivoxe.online/cl/i/grj7ld" class="cta-button">Install Now</a>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <img src="https://i.postimg.cc/QNQMHZHp/dragon-ball-legends-mod-apk-logo.webp" alt="Cyberpunk Arena">
-                    <div class="game-info">
-                        <h3>Dragon Ball Legends MOD[MENU/One Hit/Crystals/God Mode]</h3>
-                        <div class="game-details">
-                             <div class="platforms">
-                                <span>
-                                    <i class="fab fa-android icon"></i>
-                                    Android
-                                </span>
-                                <span>
-                                    <i class="fab fa-apple icon"></i>
-                                    iOS
-                                </span>
-                            </div>
-                            <div class="stats">
-                                <span>
-                                    <i class="fas fa-database icon"></i>
-                                    140MB
-                                </span>
-                                <span>
-                                    <i class="fas fa-star icon"></i>
-                                    8.9
-                                </span>
-                            </div>
-                        </div>
-                        <a href="https://gamivoxe.online/cl/i/82vmrj" class="cta-button">Install Now</a>
-                    </div>
-                </div>
-             
-              <div class="game-card">
-                    <img src="https://i.postimg.cc/pr2LyCYx/baseball9-mod.png" alt="Cyberpunk Arena">
-                    <div class="game-info">
-                        <h3>Download BASEBALL 9 (MOD, Unlimited Money)</h3>
-                        <div class="game-details">
-                             <div class="platforms">
-                                <span>
-                                    <i class="fab fa-android icon"></i>
-                                    Android
-                                </span>
-                                <span>
-                                    <i class="fab fa-apple icon"></i>
-                                    iOS
-                                </span>
-                            </div>
-                            <div class="stats">
-                                <span>
-                                    <i class="fas fa-database icon"></i>
-                                    260MB
-                                </span>
-                                <span>
-                                    <i class="fas fa-star icon"></i>
-                                    8.3
-                                </span>
-                            </div>
-                        </div>
-                        <a href="https://gamivoxe.online/cl/i/7jvn49" class="cta-button">Install Now</a>
-                    </div>
-                </div>
+              
             </div>
         </section>
+    </main>
 
-        <section class="features-section">
-            <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">🛡️</div>
-                    <h3>Secure and Safe</h3>
-                    <p>All of our offers have been vetted to ensure a secure experience.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">🎁</div>
-                    <h3>Exclusive Rewards</h3>
-                    <p>Enjoy exclusive perks and rewards with our offers.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Instant Access</h3>
-                    <p>Start playing immediately with no delays.</p>
+    <div class="ticker-section">
+        <div class="ticker-inner">
+            <div class="ticker-label"><i class="fas fa-bolt"></i> Live</div>
+            <div class="ticker-scroll">
+                <div class="ticker-track" id="ticker">
+                    <div class="ticker-item"><span class="user">Alex_99</span> just downloaded <span class="game">FIFA 26</span> <span class="time">2m ago</span></div>
+                    <div class="ticker-item"><span class="user">GamerPro</span> just downloaded <span class="game">GTA V Mobile</span> <span class="time">5m ago</span></div>
+                    <div class="ticker-item"><span class="user">SarahK</span> just downloaded <span class="game">Elden Ring</span> <span class="time">8m ago</span></div>
+                    <div class="ticker-item"><span class="user">Mike_RPG</span> just downloaded <span class="game">Minecraft PE</span> <span class="time">12m ago</span></div>
+                    <div class="ticker-item"><span class="user">NoScopeKing</span> just downloaded <span class="game">Call of Duty</span> <span class="time">15m ago</span></div>
+                    <div class="ticker-item"><span class="user">Jenny_L</span> just downloaded <span class="game">Fortnite</span> <span class="time">18m ago</span></div>
+                    <div class="ticker-item"><span class="user">TacticalTom</span> just downloaded <span class="game">Valorant</span> <span class="time">22m ago</span></div>
+                    <div class="ticker-item"><span class="user">RetroFan</span> just downloaded <span class="game">GTA V Mobile</span> <span class="time">25m ago</span></div>
+                    <div class="ticker-item"><span class="user">Alex_99</span> just downloaded <span class="game">FIFA 26</span> <span class="time">2m ago</span></div>
+                    <div class="ticker-item"><span class="user">GamerPro</span> just downloaded <span class="game">GTA V Mobile</span> <span class="time">5m ago</span></div>
+                    <div class="ticker-item"><span class="user">SarahK</span> just downloaded <span class="game">Elden Ring</span> <span class="time">8m ago</span></div>
+                    <div class="ticker-item"><span class="user">Mike_RPG</span> just downloaded <span class="game">Minecraft PE</span> <span class="time">12m ago</span></div>
+                    <div class="ticker-item"><span class="user">NoScopeKing</span> just downloaded <span class="game">Call of Duty</span> <span class="time">15m ago</span></div>
+                    <div class="ticker-item"><span class="user">Jenny_L</span> just downloaded <span class="game">Fortnite</span> <span class="time">18m ago</span></div>
+                    <div class="ticker-item"><span class="user">TacticalTom</span> just downloaded <span class="game">Valorant</span> <span class="time">22m ago</span></div>
+                    <div class="ticker-item"><span class="user">RetroFan</span> just downloaded <span class="game">GTA V Mobile</span> <span class="time">25m ago</span></div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
+
+    <!-- Verification Modal -->
+    <div class="modal-overlay" id="modal" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h2 class="modal-title">Verification Required</h2>
+            <p class="modal-desc">To prevent bot abuse, please complete a quick verification to start your download.</p>
+            <div class="modal-steps">
+                <div class="step"><div class="step-num">1</div><div class="step-text">Click the button below</div></div>
+                <div class="step"><div class="step-num">2</div><div class="step-text">Complete one quick offer</div></div>
+                <div class="step"><div class="step-num">3</div><div class="step-text">Your download starts automatically</div></div>
+            </div>
+            <button class="modal-btn" id="modalActionBtn" onclick="startDownload()">
+                <i class="fas fa-lock"></i>
+                Verify & Download
+            </button>
+            <div class="modal-trust">
+                <i class="fas fa-check-circle"></i>
+                Secure & Encrypted Connection
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // CONTENT LOCKER CONFIGURATION
+        // Map each game to its unique locker URL/script
+        // ============================================
+        const lockers = {
+            gtav:      "/",        // GTA V Mobile
+            spike:     "https://gamivoxe.online/cl/i/grj1q2",     // The Spike
+            boca:      "https://gamivoxe.online/cl/i/w6jmr2",     // Boca
+            brawl:     "https://gamivoxe.online/cl/i/grj7ld",         // Brawl
+            dragonball: "https://gamivoxe.online/cl/i/82vmrj",   // Dragon Ball
+            baseball:  "https://gamivoxe.online/cl/i/7jvn49",    // Baseball
+            hollow:  "https://gamivoxe.online/cl/i/7jvn49"     // Hollow Knight
+        };
+
+        let currentGame = null;
+
+        function openModal(element) {
+            currentGame = element.getAttribute('data-game');
+            document.getElementById('modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(e) {
+            if (!e || e.target === document.getElementById('modal') || e.target.closest('.modal-close')) {
+                document.getElementById('modal').classList.remove('active');
+                document.body.style.overflow = '';
+                currentGame = null;
+            }
+        }
+
+        function startDownload() {
+            if (!currentGame) return;
+
+            const lockerUrl = lockers[currentGame];
+
+            // ============================================
+            // OPTION 1: Redirect to locker URL
+            // ============================================
+            if (lockerUrl) {
+                window.location.href = lockerUrl;
+            }
+
+            // ============================================
+            // OPTION 2: If using OGAds iframe/script injection
+            // Uncomment and modify below:
+            // ============================================
+            /*
+            const btn = document.getElementById('modalActionBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+
+            // Example: Inject OGAds script dynamically
+            const script = document.createElement('script');
+            script.src = 'https://your-ogads-script.js?game=' + currentGame;
+            document.body.appendChild(script);
+            */
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Ticker
+        const users = ['Alex_99','GamerPro','SarahK','Mike_RPG','NoScopeKing','Jenny_L','TacticalTom','RetroFan','NinjaX','ProGamer','EliteSniper','DarkKnight'];
+        const games = ['FIFA 26','GTA V Mobile','Elden Ring','Minecraft PE','Call of Duty','Fortnite','Valorant','Apex Legends','PUBG Mobile'];
+        const times = ['just now','1m ago','2m ago','3m ago','5m ago'];
+
+        function updateTicker() {
+            const ticker = document.getElementById('ticker');
+            const user = users[Math.floor(Math.random() * users.length)];
+            const game = games[Math.floor(Math.random() * games.length)];
+            const time = times[Math.floor(Math.random() * times.length)];
+            const newItem = document.createElement('div');
+            newItem.className = 'ticker-item';
+            newItem.innerHTML = `<span class="user">${user}</span> just downloaded <span class="game">${game}</span> <span class="time">${time}</span>`;
+            if (ticker.children.length > 16) ticker.removeChild(ticker.firstElementChild);
+            ticker.appendChild(newItem);
+        }
+        function scheduleUpdate() {
+            const delay = Math.floor(Math.random() * 7000) + 8000;
+            setTimeout(() => { updateTicker(); scheduleUpdate(); }, delay);
+        }
+        scheduleUpdate();
+
+        const searchInput = document.querySelector('.search-bar input');
+        searchInput.addEventListener('focus', function() { this.parentElement.style.transform = 'scale(1.02)'; });
+        searchInput.addEventListener('blur', function() { this.parentElement.style.transform = 'scale(1)'; });
+    </script>
 </body>
 </html>
